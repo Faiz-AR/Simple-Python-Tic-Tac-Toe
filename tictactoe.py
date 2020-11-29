@@ -60,15 +60,14 @@ def check(mark):
         return False
 
 #   GAME   #
-print("Welcome to Tic-Tac-Toe!")
-game = True
 global counter
 global m
+game = True
 m = ''
 counter = 1
-board = ['-','-','-',
-         '-','-','-',
-         '-','-','-']
+board = ['-','-','-', '-','-','-','-','-','-']
+         
+print("Welcome to Tic-Tac-Toe!")
 while True:
     player1_marker, player2_marker = player_input()
     while game == True:
@@ -82,5 +81,14 @@ while True:
         choice = player_choice()
         replace(board,choice,m)
         if check(m) == True:
-            exit()
-        counter +=1
+            game = False
+            replay = input('Play Again? (Y/N): ')
+            if replay == 'Y':
+                game = True
+                board = ['-','-','-','-','-','-','-','-','-']
+                game_board(board)
+                break
+            else:
+                exit()
+        else:
+            counter +=1     
