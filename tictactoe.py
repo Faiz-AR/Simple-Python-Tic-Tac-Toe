@@ -8,7 +8,6 @@ def game_board(board):
 def player_choice():
     number_range = list(range(1,10))
     choice = ''
-
     while choice not in number_range:
         try:
             choice = int(input("Enter a number between 1-9: "))
@@ -16,7 +15,7 @@ def player_choice():
                 print("Sorry, the number you entered is out of range! Please try again")
         except:
             print("Please enter a number value!")
-
+    
     return int(choice)-1   
 
 def player_input():
@@ -24,6 +23,8 @@ def player_input():
 
     while marker != 'X' and marker != 'O':
         marker = input('Player 1, choose X or O: ')
+        if marker != 'X' and marker != 'O':
+            print("Enter X or O!")
 
     player1 = marker
     if player1 == 'X':
@@ -34,7 +35,15 @@ def player_input():
     return (player1, player2)
 
 def replace(board,choice,mark):
-    board[choice] = mark
+    valid = False
+
+    if board[choice] != '-':
+        valid = False
+    else:
+        board[choice] = mark
+        valid = True
+    
+    return valid
 
 def check(mark):
     #HORIZONTAL WIN
@@ -79,7 +88,9 @@ while True:
             m = player2_marker
             print('Player 2('+m+') turn!')
         choice = player_choice()
-        replace(board,choice,m)
+        if replace(board,choice,m) ==  False:
+            print('Space taken! Try again')
+            continue
         if check(m) == True:
             game = False
             replay = input('Play Again? (Y/N): ')
